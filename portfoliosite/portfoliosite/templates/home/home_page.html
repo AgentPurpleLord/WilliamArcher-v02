@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+<section class="hero">
+    <h1 class="hero__header">{{ self.hero }}</h1>
+    <h2 class="hero__subheader">{{ self.hero_subtitle }}</h2>
+    <div class="hero__button">
+        <button onclick="scrollSmoothTo('footer')" class="btn btn--success">
+            <span class="btn__text">HIRE ME</span>
+        </button>
+    </div>
+
+</section>
+
+<section class="gallery">
+    <div class="container">
+        <div class="gallery__menu col">
+            <ul class="gallery__nav filter">
+                <li class="gallery__link active category-item" data-filter="*">
+                    <a href="#">All</a>
+                </li>
+                {% for project in projects %}
+                {% for cat in project.categories.all %}
+                    <li class="gallery__link category-item" data-filter=".{{ cat.slug }}">
+                    <a href="#">{{ cat.name }}</a>
+                    </li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="">
+        <div class="row isotope__grid gallery__projects">
+            {% for project in projects %}
+            <div data-aos="fade-up" class="gallery__item {% for cat in project.categories.all %} {{ cat.slug }} {% endfor %}">
+                <a class="animsition-link" href="{{ project.url }}">
+                    <figure>
+                        {% image project.project_image width-800 as project_img %}
+                        <img src="{{ project_img.url }}" data-echo="{{ project_img.url }}" alt="project_img.alt" />
+                    </figure>
+                    <h4>{{ project.title }}</h4>
+                    {% for cat in project.categories.all %}
+                        <p>{{ cat.name }}</p>
+                    {% endfor %}
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

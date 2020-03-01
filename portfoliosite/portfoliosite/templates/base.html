@@ -1,0 +1,75 @@
+{% load static wagtailuserbar %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            {% block title %}
+                {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+            {% endblock %}
+            {% block title_suffix %}
+                {% with self.get_site.site_name as site_name %}
+                    {% if site_name %}- {{ site_name }}{% endif %}
+                {% endwith %}
+            {% endblock %}
+        </title>
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        {# Global stylesheets #}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/portfoliosite.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+        {% block extra_css %}
+            {# Override this in templates to add extra stylesheets #}
+        {% endblock %}
+    </head>
+
+    <body class="{% block body_class %}{% endblock %}">
+        {% wagtailuserbar %}
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+        <script src="https://unpkg.com/isotope-layout@2/dist/isotope.pkgd.min.js"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script type="text/javascript" src="{% static 'js/portfoliosite.js' %}"></script>
+        <script defer>
+            $(document).click(function () {
+                        $('.navbar__toggler').toggleClass('active');
+                        console.log("Clicked menu");
+                        $(".navbar__collapse").toggleClass("show__list");
+                        $(".navbar__collapse").slideDown();
+
+                    });
+        </script>
+
+        <nav class="navbar navbar--light">
+            <a class="navbar__home h3" aria-label="Home" href="/">
+                <svg class="navbar__logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 683.74 1059.96"><title>William Archer</title><g id="50335580-d3f8-4292-9685-d2080d046482" data-name="Layer 2"><g id="939329d1-3a53-4ef1-afa8-2bedefac3bcb" data-name="Logo"><g id="aaae6394-99ce-4206-b06f-895a7a96c98a" data-name="Logo"><path id="0a582c82-7f74-4cc9-93bd-da3b3a1f501d" data-name="Outside" d="M678.38,714.3,380,19.35c-10.94-25.5-46.95-25.89-58.44-.63L5.94,712.39a66.12,66.12,0,0,0,16.82,77.3L321.29,1049a44.75,44.75,0,0,0,59.63-.86L662.4,789A66.13,66.13,0,0,0,678.38,714.3Zm-90.8,42.16-2.75.72a43.26,43.26,0,0,1-50.61-24.48L460,539.66H366.76V865.77c6.36,19.92,37.12,118.43,22.91,117.13-13.09-1.2-21,9.71-23.3,13.51-3.6,20.2-34.64,20.5-39.11,1v.33s-8.24-16.25-24.05-14.8C288.51,984.24,322,878.73,326.69,864V539.66H223.12L143,732.27a43.26,43.26,0,0,1-78.54-36.2L303.91,126.92c21.5-35.36,73-34.7,93.62,1.21L617,699.09A43.26,43.26,0,0,1,587.58,756.46Z" /><path id="26b8c19b-5ffa-4e39-be84-d7b8a9871ec7" data-name="Centre" d="M357.08,284.56a6.24,6.24,0,0,0-11.58-.27L282.25,432.05a13.48,13.48,0,0,0,12.39,18.78h105.2a13.48,13.48,0,0,0,12.62-18.2Z" /></g></g></g></svg>
+            </a>
+            <div class="navbar__collapse" style="display: block;">
+                <ul class="navbar__menu">
+                    <!-- @todo fix up the menu -->
+                </ul>
+            </div>
+        </nav>
+
+        {% block content %}{% endblock %}
+
+        {# Global javascript #}
+
+
+        {% block extra_js %}
+            {# Override this in templates to add extra javascript #}
+        {% endblock %}
+        <footer>
+        <script>
+        AOS.init();
+        window.addEventListener('load', AOS.refresh)
+        </script>
+        </footer>
+    </body>
+</html>
